@@ -34,9 +34,9 @@ try {
           function get() {
             category = [];
             category.push(`category/${e.target.textContent}`);
+            getData();
           }
 
-          getData();
           get();
         });
 
@@ -68,29 +68,24 @@ function renderArr(data) {
     newRate.classList.add("product__star");
 
     let newRateOne = document.createElement("p");
-    newRateOne.className = `fa fa-star ${
-      Math.round(+element.rating.rate) >= 1 ? "checked" : ""
-    }`;
+    newRateOne.className = `fa fa-star ${Math.round(+element.rating.rate) >= 1 ? "checked" : ""
+      }`;
 
     let newRateTwo = document.createElement("p");
-    newRateTwo.className = `fa fa-star ${
-      Math.round(+element.rating.rate) >= 2 ? "checked" : ""
-    }`;
+    newRateTwo.className = `fa fa-star ${Math.round(+element.rating.rate) >= 2 ? "checked" : ""
+      }`;
 
     let newRateThere = document.createElement("p");
-    newRateThere.className = `fa fa-star ${
-      Math.round(+element.rating.rate) >= 3 ? "checked" : ""
-    }`;
+    newRateThere.className = `fa fa-star ${Math.round(+element.rating.rate) >= 3 ? "checked" : ""
+      }`;
 
     let newRateFour = document.createElement("p");
-    newRateFour.className = `fa fa-star ${
-      Math.round(+element.rating.rate) >= 4 ? "checked" : ""
-    }`;
+    newRateFour.className = `fa fa-star ${Math.round(+element.rating.rate) >= 4 ? "checked" : ""
+      }`;
 
     let newRateFive = document.createElement("p");
-    newRateFive.className = `fa fa-star ${
-      Math.round(+element.rating.rate) >= 5 ? "checked" : ""
-    }`;
+    newRateFive.className = `fa fa-star ${Math.round(+element.rating.rate) >= 5 ? "checked" : ""
+      }`;
 
     let newPriceBox = document.createElement("div");
 
