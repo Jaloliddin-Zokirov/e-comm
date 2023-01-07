@@ -44,7 +44,7 @@ try {
       });
     });
 } catch (error) {
-  console.error(error)
+  console.error(error )
 }
 
 function renderArr(data) {
