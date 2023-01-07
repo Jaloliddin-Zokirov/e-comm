@@ -1,126 +1,121 @@
 const boxCards = document.querySelector(".product__cards");
-const btn = document.querySelector(".product__btn")
-const product__list = document.querySelector(".product__list")
-const ul = document.createElement('ul')
-const All = document.querySelector(".product__list__all")
+const elCards = document.querySelector(".js-cards");
+const btn = document.querySelector(".product__btn");
+const product__list = document.querySelector(".product__list");
+const ul = document.createElement("ul");
+const All = document.querySelector(".product__list__all");
 
-let category = []
+let category = [];
 
 All.addEventListener("click", (e) => {
-    category = []
-    category.push(``)
-    getData()
-})
+  category = [];
+  category.push(``);
+  getData();
+});
 
 try {
-    function getData() {
-        fetch(`https://fakestoreapi.com/products/${category.toString()}`)
-            .then((response) => response.json())
-            .then((data) => console.log(data));
-    }
-    getData()
-
-
-    fetch(`https://fakestoreapi.com/products/categories`)
-        .then((response) => response.json())
-        .then((data) => {
-            data.map((item) => {
-                const li = document.createElement('li')
-                const btn = document.createElement('button')
-                btn.textContent = item
-                li.append(btn)
-
-                btn.addEventListener('click', (e) => {
-                    function get() {
-                        category = []
-                        category.push(`category/${e.target.textContent}`)
-                    }
-
-                    getData()
-                    get()
-                })
-
-                product__list.append(li)
-            })
-        })
-} catch (error) {
-
-}
-const elCards = document.querySelector('.js-cards')
-
-const localCards = window.localStorage.getItem(`cards`);
-
-let cards = localCards ? JSON.parse(localCards) : [];
-
-async function getCards(url) {
-  try {
-    const rawData = await fetch(`https://fakestoreapi.com/${url}`);
-    const data = await rawData.json();
-    cards = data;
-    window.localStorage.setItem(`cards`, JSON.stringify(data));
-  } catch (error) {
-    console.error(error);
-    console.error(`Internet uzildi`);
+  function getData() {
+    fetch(`https://fakestoreapi.com/products/${category.toString()}`)
+      .then((response) => response.json())
+      .then((data) => renderArr(data));
   }
+  getData();
+
+  fetch(`https://fakestoreapi.com/products/categories`)
+    .then((response) => response.json())
+    .then((data) => {
+      data.map((item) => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.textContent = item;
+        li.append(btn);
+
+        btn.addEventListener("click", (e) => {
+          function get() {
+            category = [];
+            category.push(`category/${e.target.textContent}`);
+          }
+
+          getData();
+          get();
+        });
+
+        product__list.append(li);
+      });
+    });
+} catch (error) {
+  console.error(error)
 }
-
-getCards('products')
-
 
 function renderArr(data) {
-  elCards.innerHTML = ''
+  elCards.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     const element = data[i];
-    let newItem = document.createElement('li')
-    newItem.classList.add('product__cards-item')
+    let newItem = document.createElement("li");
+    newItem.classList.add("product__cards-item");
 
-    let newImg = document.createElement('img')
-    newImg.src = element.image
+    let newImg = document.createElement("img");
+    newImg.src = element.image;
 
-    let newDiv = document.createElement('div')
-    newDiv.classList.add('product__content')
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("product__content");
 
-    let newText = document.createElement('p')
-    newText.textContent = element.title
-    newText.classList.add('product__text')
+    let newText = document.createElement("p");
+    newText.textContent = element.title;
+    newText.classList.add("product__text");
 
-    let newRate = document.createElement('div')
-    newRate.classList.add('product__star')
+    let newRate = document.createElement("div");
+    newRate.classList.add("product__star");
 
-    let newRateOne = document.createElement('p')
-    newRateOne.className = `fa fa-star ${Math.round(+element.rating.rate) >= 1 ? 'checked' : ''}`
+    let newRateOne = document.createElement("p");
+    newRateOne.className = `fa fa-star ${
+      Math.round(+element.rating.rate) >= 1 ? "checked" : ""
+    }`;
 
-    let newRateTwo = document.createElement('p')
-    newRateTwo.className = `fa fa-star ${Math.round(+element.rating.rate) >= 2 ? 'checked' : ''}` 
-    
-    let newRateThere = document.createElement('p')
-    newRateThere.className = `fa fa-star ${Math.round(+element.rating.rate) >= 3 ? 'checked' : ''}`
-    
-    let newRateFour = document.createElement('p')
-    newRateFour.className = `fa fa-star ${Math.round(+element.rating.rate) >= 4 ? 'checked' : ''}` 
-    
-    let newRateFive = document.createElement('p')
-    newRateFive.className = `fa fa-star ${Math.round(+element.rating.rate) >= 5 ? 'checked' : ''}`
+    let newRateTwo = document.createElement("p");
+    newRateTwo.className = `fa fa-star ${
+      Math.round(+element.rating.rate) >= 2 ? "checked" : ""
+    }`;
 
-    let newPriceBox = document.createElement('div')
+    let newRateThere = document.createElement("p");
+    newRateThere.className = `fa fa-star ${
+      Math.round(+element.rating.rate) >= 3 ? "checked" : ""
+    }`;
 
-    let newPrice = document.createElement('span')
-    newPrice.textContent = (+element.price * 0.76).toFixed(2)
-    newPrice.classList.add('product__price')
+    let newRateFour = document.createElement("p");
+    newRateFour.className = `fa fa-star ${
+      Math.round(+element.rating.rate) >= 4 ? "checked" : ""
+    }`;
 
-    let newPriceDel = document.createElement('del')
-    newPriceDel.textContent = `$${element.price}`
-    newPriceDel.classList.add('product__price-del')
+    let newRateFive = document.createElement("p");
+    newRateFive.className = `fa fa-star ${
+      Math.round(+element.rating.rate) >= 5 ? "checked" : ""
+    }`;
 
-    let newPricePercentage = document.createElement('span')
-    newPricePercentage.textContent = '24% Off'
-    newPricePercentage.classList.add('product__percentage')
+    let newPriceBox = document.createElement("div");
 
-    newPriceBox.append(newPrice, newPriceDel, newPricePercentage)
-    newRate.append(newRateOne, newRateTwo, newRateThere, newRateFour, newRateFive)
-    newDiv.append(newText, newRate, newPriceBox)
-    newItem.append(newImg, newDiv)
-    elCards.appendChild(newItem)
+    let newPrice = document.createElement("span");
+    newPrice.textContent = (+element.price * 0.76).toFixed(2);
+    newPrice.classList.add("product__price");
+
+    let newPriceDel = document.createElement("del");
+    newPriceDel.textContent = `$${element.price}`;
+    newPriceDel.classList.add("product__price-del");
+
+    let newPricePercentage = document.createElement("span");
+    newPricePercentage.textContent = "24% Off";
+    newPricePercentage.classList.add("product__percentage");
+
+    newPriceBox.append(newPrice, newPriceDel, newPricePercentage);
+    newRate.append(
+      newRateOne,
+      newRateTwo,
+      newRateThere,
+      newRateFour,
+      newRateFive
+    );
+    newDiv.append(newText, newRate, newPriceBox);
+    newItem.append(newImg, newDiv);
+    elCards.appendChild(newItem);
   }
 }
-renderArr(cards)
