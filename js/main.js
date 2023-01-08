@@ -4,8 +4,10 @@ const btn = document.querySelector(".product__btn");
 const product__list = document.querySelector(".product__list");
 const ul = document.createElement("ul");
 const All = document.querySelector(".product__list__all");
+const elBasketNum = document.querySelector(".js-number");
 
 let category = [];
+let parrentArr = [];
 
 All.addEventListener("click", (e) => {
   category = [];
@@ -53,8 +55,56 @@ function renderArr(data) {
     const element = data[i];
     let newItem = document.createElement("li");
     newItem.classList.add("product__cards-item");
+    newItem.id = element.id;
+
+    let newHover = document.createElement("div");
+    newHover.classList.add("product__hover");
+
+    let newCircleOne = document.createElement("span");
+    newCircleOne.classList.add("product__circle");
+
+    let newCircleTwo = document.createElement("span");
+    newCircleTwo.classList.add("product__circle");
+
+    let newLike = document.createElement("img");
+    newLike.className = "product__like";
+    newLike.src = "../img/heart-oncheck.png";
+
+    let newLikeCheck = document.createElement("img");
+    newLikeCheck.className = "product__like check";
+    newLikeCheck.src = "../img/heart-check.png";
+
+    let newBasket = document.createElement("img");
+    newBasket.className = "product__basket";
+    newBasket.src = "../img/cart-oncheck.png";
+
+    let newBasketCheck = document.createElement("img");
+    newBasketCheck.className = "product__basket check";
+    newBasketCheck.src = "../img/cart-check.png";
+
+    newCircleOne.addEventListener("click", () => {
+      newLike.classList.toggle("check");
+      newLikeCheck.classList.toggle("check");
+    });
+
+    newCircleTwo.addEventListener("click", () => {
+      newBasket.classList.toggle("check");
+      newBasketCheck.classList.toggle("check");
+    });
+
+    newCircleTwo.addEventListener("click", (evt) => {
+      if (newBasket.className == "product__basket check") {
+        let parrentId = evt.target.parentNode.parentNode.parentNode.id;
+        parrentArr.push(parrentId);
+        elBasketNum.textContent = parrentArr.length;
+      } else {
+        parrentArr.length--;
+        elBasketNum.textContent = parrentArr.length;
+      }
+    });
 
     let newImg = document.createElement("img");
+    newImg.classList.add("product__img");
     newImg.src = element.image;
 
     let newDiv = document.createElement("div");
@@ -115,7 +165,12 @@ function renderArr(data) {
       newRateFive
     );
     newDiv.append(newText, newRate, newPriceBox);
-    newItem.append(newImg, newDiv);
+    newCircleOne.append(newLike, newLikeCheck);
+    newCircleTwo.append(newBasket, newBasketCheck);
+    newHover.append(newCircleOne, newCircleTwo);
+    newItem.append(newHover, newImg, newDiv);
     elCards.appendChild(newItem);
   }
 }
+
+// karzinka
