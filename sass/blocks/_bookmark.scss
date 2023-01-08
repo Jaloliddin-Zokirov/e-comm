@@ -1,0 +1,16 @@
+.bookmark__heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    h3{
+        font-weight: 500;
+    }
+
+    div{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+}

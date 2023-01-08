@@ -50,6 +50,7 @@ try {
 }
 
 function renderArr(data) {
+  localStorage.setItem("data", JSON.stringify(data))
   elCards.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     const element = data[i];
@@ -96,6 +97,7 @@ function renderArr(data) {
       if (newBasket.className == "product__basket check") {
         let parrentId = evt.target.parentNode.parentNode.parentNode.id;
         parrentArr.push(parrentId);
+        localStorage.setItem("id", JSON.stringify(parrentArr))
         elBasketNum.textContent = parrentArr.length;
       } else {
         parrentArr.length--;
@@ -173,4 +175,30 @@ function renderArr(data) {
   }
 }
 
-// karzinka
+// search
+
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.querySelector('.product__search');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("p")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+btn.addEventListener("click", ()=>{
+
+  myFunction()
+})
+
