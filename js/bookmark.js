@@ -5,7 +5,6 @@ const total = document.querySelector(".js-total");
 const localId = JSON.parse(localStorage.getItem("id"));
 
 let numberArr = [1];
-let totalArr = [];
 
 for (let i = 0; i < localId.length; i++) {
   function getData() {
@@ -47,12 +46,9 @@ for (let i = 0; i < localId.length; i++) {
           function plusFunc() {
             numberArr.length++;
             number.textContent = numberArr.length;
-            price.textContent = (+data.price * 0.76 * numberArr.length).toFixed(
+            price.textContent = `$${(+data.price * 0.76 * numberArr.length).toFixed(
               2
-            );
-            totalArr.unshift(price.textContent)
-            totalArr.push(Number(price.textContent)).toFixed(2);
-            console.log(totalArr);
+            )}`
           }
 
           plus.addEventListener("click", () => {
@@ -62,11 +58,9 @@ for (let i = 0; i < localId.length; i++) {
           function minusfunc() {
             numberArr.length--;
             number.textContent = numberArr.length;
-            price.textContent = (+data.price * 0.76 * numberArr.length).toFixed(
+            price.textContent = `$${(+data.price * 0.76 * numberArr.length).toFixed(
               2
-            );
-            totalArr = (+data.price * 0.76 * numberArr.length).toFixed(2);
-            console.log(totalArr);
+            )}`
           }
 
           minus.addEventListener("click", () => {
@@ -75,7 +69,7 @@ for (let i = 0; i < localId.length; i++) {
 
           const price = document.createElement("p");
           price.className = "price";
-          price.textContent = (+data.price * 0.76).toFixed(2);
+          price.textContent = `$${(+data.price * 0.76).toFixed(2)}`;
 
           const priceTwo = document.createElement("p");
           priceTwo.className = "priceTwo";
@@ -96,6 +90,8 @@ for (let i = 0; i < localId.length; i++) {
               });
             }
           });
+
+          total.textContent = `$${data.price}`
 
           div.append(minus, number, plus);
           li.append(btn, img, title, price, div, priceTwo);
