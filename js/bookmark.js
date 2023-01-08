@@ -1,43 +1,107 @@
 const bkm = document.querySelector(".bookmark__inner");
-const localData = JSON.parse(localStorage.getItem("data"))
+const localData = JSON.parse(localStorage.getItem("data"));
+const total = document.querySelector(".js-total");
 
-console.log(localData);
+const localId = JSON.parse(localStorage.getItem("id"));
 
-const localId = JSON.parse(localStorage.getItem("id"))
+let numberArr = [1];
+let totalArr = [];
 
+for (let i = 0; i < localId.length; i++) {
+  function getData() {
+    fetch(`https://fakestoreapi.com/products/${localId[i]}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (localId[i] == data.id) {
+          const li = document.createElement("li");
+          li.className = "item";
 
+          const btn = document.createElement("button");
+          btn.className = "button";
+          btn.id = data.id;
+          btn.textContent = "x";
 
-for(let i = 0; i<localId.length; i++){
-    function getData() {
-        fetch(`https://fakestoreapi.com/products/${localId[i]}`)
-          .then((response) => response.json())
-          .then((data) => {
-            if(localId[i] == data.id){
-                const li = document.createElement('li')
-                const btn = document.createElement('button')
-                const arr = localId
-                btn.textContent = 'x'
-                btn.id = data.id
-                li.textContent= data.title
+          const img = document.createElement("img");
+          img.className = "image";
+          img.src = data.image;
 
-                btn.addEventListener("click", (e) => {
-                    if(e.currentTarget.id == data.id){
-                        li.style.display = 'none'
+          const title = document.createElement("p");
+          title.className = "title";
+          title.textContent = data.title;
 
-                        arr.map(item => {
-                            if(e.currentTarget.id == item){
-                                arr.pop(item)
-                                console.log(arr);
-                                localStorage.setItem("id", JSON.stringify(arr))
-                            }
-                        })
-                    }
-                })
+          const div = document.createElement("div");
+          div.className = "numberDiv";
 
-                li.append(btn)
-                bkm.append(li)
+          const minus = document.createElement("span");
+          minus.className = "minus";
+          minus.textContent = "-";
+
+          const number = document.createElement("span");
+          number.className = "number";
+          number.textContent = numberArr.length;
+
+          const plus = document.createElement("span");
+          plus.className = "plus";
+          plus.textContent = "+";
+
+          function plusFunc() {
+            numberArr.length++;
+            number.textContent = numberArr.length;
+            price.textContent = (+data.price * 0.76 * numberArr.length).toFixed(
+              2
+            );
+            totalArr.unshift(price.textContent)
+            totalArr.push(Number(price.textContent)).toFixed(2);
+            console.log(totalArr);
+          }
+
+          plus.addEventListener("click", () => {
+            plusFunc()
+          });
+          
+          function minusfunc() {
+            numberArr.length--;
+            number.textContent = numberArr.length;
+            price.textContent = (+data.price * 0.76 * numberArr.length).toFixed(
+              2
+            );
+            totalArr = (+data.price * 0.76 * numberArr.length).toFixed(2);
+            console.log(totalArr);
+          }
+
+          minus.addEventListener("click", () => {
+            minusfunc();
+          });
+
+          const price = document.createElement("p");
+          price.className = "price";
+          price.textContent = (+data.price * 0.76).toFixed(2);
+
+          const priceTwo = document.createElement("p");
+          priceTwo.className = "priceTwo";
+          priceTwo.textContent = `$${(+data.price * 0.76).toFixed(2)}`;
+
+          const arr = localId;
+
+          btn.addEventListener("click", (e) => {
+            if (e.currentTarget.id == data.id) {
+              li.style.display = "none";
+
+              arr.map((item) => {
+                if (e.currentTarget.id == item) {
+                  arr.pop(item);
+                  console.log(arr);
+                  localStorage.setItem("id", JSON.stringify(arr));
+                }
+              });
             }
           });
-      }
-      getData()
+
+          div.append(minus, number, plus);
+          li.append(btn, img, title, price, div, priceTwo);
+          bkm.append(li);
+        }
+      });
+  }
+  getData();
 }
